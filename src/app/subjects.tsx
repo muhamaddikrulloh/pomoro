@@ -5,22 +5,28 @@ import { useFeedback } from '@/context/FeedbackContext';
 import { useApp } from '@/context/AppContext';
 import { palette as c } from '@/constants/theme';
 
+// Ikon pensil vektor sederhana untuk tombol ubah nama aktivitas.
 function PencilIcon({ color }: { color: string }) {
   return <View style={{ width: 14, height: 14, alignItems: 'center', justifyContent: 'center' }}><View style={{ width: 10, height: 4, borderWidth: 1.5, borderColor: color, borderRadius: 1, transform: [{ rotate: '-45deg' }] }} /><View style={{ position: 'absolute', bottom: 1, left: 1, width: 3, height: 3, borderLeftWidth: 1.5, borderBottomWidth: 1.5, borderColor: color }} /></View>;
 }
 
+// Ikon tempat sampah vektor untuk tombol hapus aktivitas.
 function TrashIcon({ color }: { color: string }) {
   return <View style={{ width: 14, height: 14, alignItems: 'center', justifyContent: 'center' }}><View style={{ width: 5, height: 1.5, borderTopWidth: 1.5, borderLeftWidth: 1.5, borderRightWidth: 1.5, borderColor: color, borderTopLeftRadius: 1, borderTopRightRadius: 1 }} /><View style={{ width: 12, height: 1.5, backgroundColor: color }} /><View style={{ width: 9, height: 8, borderLeftWidth: 1.5, borderRightWidth: 1.5, borderBottomWidth: 1.5, borderColor: color, borderBottomLeftRadius: 2, borderBottomRightRadius: 2, marginTop: 1 }} /></View>;
 }
 
+// Halaman Kelola Aktivitas: menambah, mengedit, dan menghapus daftar subjek fokus.
 export default function SubjectsScreen() {
   const { state, busy, act } = useApp();
   const { confirm, notify } = useFeedback();
   const [editingId, setEditingId] = useState<string | undefined>();
   const [name, setName] = useState('');
   const [validation, setValidation] = useState('');
+  // Cegah manipulasi aktivitas ketika timer sedang berjalan atau dijeda.
   const active = state.timer.status === 'running' || state.timer.status === 'paused';
   const trimmedName = name.trim();
+
+  // Menyimpan aktivitas baru atau memperbarui nama aktivitas yang dipilih.
   async function save() {
     if (!trimmedName || trimmedName.length > 40) {
       setValidation('Masukkan nama aktivitas sepanjang 1–40 karakter.');
@@ -53,6 +59,7 @@ export default function SubjectsScreen() {
         <Pressable accessibilityRole="button" accessibilityLabel={`Ubah ${subject.name}`} disabled={busy || active} onPress={() => { setEditingId(subject.id); setName(subject.name); setValidation(''); }} style={({ pressed }) => ({ width: 38, height: 38, borderRadius: 19, backgroundColor: c.surfaceMuted, borderWidth: 1, borderColor: c.border, alignItems: 'center', justifyContent: 'center', opacity: busy || active ? 0.3 : pressed ? 0.5 : 1 })}>
           <PencilIcon color={c.foreground} />
         </Pressable>
+        {/* Tombol hapus memerlukan konfirmasi dan tidak aktif jika hanya tersisa 1 aktivitas */}
         <Pressable accessibilityRole="button" accessibilityLabel={`Hapus ${subject.name}`} disabled={busy || active || state.subjects.length <= 1} onPress={() => confirm('Hapus aktivitas?', `“${subject.name}” akan dihapus. Nama aktivitas pada sesi yang tersimpan tidak berubah.`, () => { void act({ type: 'deleteSubject', id: subject.id }).then(success => { if (success) notify('Aktivitas dihapus.'); }); })} style={({ pressed }) => ({ width: 38, height: 38, borderRadius: 19, backgroundColor: c.surfaceMuted, borderWidth: 1, borderColor: c.border, alignItems: 'center', justifyContent: 'center', opacity: busy || active || state.subjects.length <= 1 ? 0.3 : pressed ? 0.5 : 1 })}>
           <TrashIcon color={state.subjects.length <= 1 ? c.muted : c.danger} />
         </Pressable>

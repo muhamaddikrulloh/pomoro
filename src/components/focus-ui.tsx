@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { palette as c } from '@/constants/theme';
 import { ui } from '@/components/ui';
 
+// Tampilan visual hitung mundur dengan dial radial dan persentase sesi.
 export function TimerDisplay({ seconds, duration, label }: { seconds: number; duration: number; label: string }) {
   const { width, fontScale } = useWindowDimensions();
   const size = Math.min(width - 80, 240);
@@ -10,6 +11,7 @@ export function TimerDisplay({ seconds, duration, label }: { seconds: number; du
   const minutes = Math.floor(seconds / 60).toString().padStart(2, '0');
   const remainder = Math.floor(seconds % 60).toString().padStart(2, '0');
   return <View accessibilityLabel={`${label}, tersisa ${minutes} menit ${remainder} detik`} style={{ width: expanded ? '100%' : size, minHeight: size, paddingVertical: expanded ? 24 : 0, alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
+    {/* Tampilkan 60 indikator detik melingkar bila skala font normal */}
     {!expanded ? <View accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={StyleSheet.absoluteFill}>
       {Array.from({ length: 60 }, (_, index) => <View key={index} style={{ position: 'absolute', width: 2, height: size, left: size / 2 - 1, top: 0, transform: [{ rotate: `${index * 6}deg` }] }}>
         <View style={{ width: 2, height: index % 5 === 0 ? 20 : 12, backgroundColor: index / 60 < progress ? '#B69730' : c.border, borderRadius: 1 }} />
@@ -21,6 +23,7 @@ export function TimerDisplay({ seconds, duration, label }: { seconds: number; du
   </View>;
 }
 
+// Diagram batang horizontal sederhana untuk melihat riwayat fokus 7 hari terakhir.
 export function WeeklyChart({ week }: { week: { key: string; label: string; seconds: number }[] }) {
   const highest = Math.max(60, ...week.map(day => day.seconds));
   return <View style={{ gap: 16 }}><View style={ui.wrap}><Text style={ui.section}>Waktu fokus</Text><Text style={[ui.caption, { alignSelf: 'center', color: c.foreground }]}>7 hari · menit</Text></View>
@@ -34,6 +37,7 @@ export function WeeklyChart({ week }: { week: { key: string; label: string; seco
   </View>;
 }
 
+// Baris daftar sesi riwayat yang memuat nama aktivitas, durasi fokus, dan waktu selesai.
 export function SessionRow({ name, seconds, completedAt }: { name: string; seconds: number; completedAt: number }) {
   const date = new Date(completedAt);
   return <View style={{ paddingVertical: 16, borderBottomWidth: 1, borderBottomColor: c.border, gap: 4 }}>
@@ -41,3 +45,4 @@ export function SessionRow({ name, seconds, completedAt }: { name: string; secon
     <View style={ui.between}><Text style={ui.caption}>{date.toLocaleDateString('id-ID', { month: 'short', day: 'numeric', year: 'numeric' })} · {date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}</Text><Text style={[ui.caption, { color: '#276347' }]}>Selesai</Text></View>
   </View>;
 }
+

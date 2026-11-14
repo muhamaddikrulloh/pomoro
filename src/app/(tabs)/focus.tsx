@@ -7,8 +7,10 @@ import { TimerDisplay } from '@/components/focus-ui';
 import { useApp } from '@/context/AppContext';
 import { palette as c } from '@/constants/theme';
 
+// Opsi mode timer Pomodoro beserta label bahasa Indonesia.
 const modes = [{ mode: 'focus', label: 'Fokus' }, { mode: 'shortBreak', label: 'Istirahat singkat' }, { mode: 'longBreak', label: 'Istirahat panjang' }] as const;
 
+// Halaman Fokus: pusat kendali timer Pomodoro, pemilihan aktivitas, dan transisi istirahat.
 export default function FocusScreen() {
   const { state, remainingSeconds, busy, act } = useApp();
   const { confirm, notify } = useFeedback();
@@ -16,6 +18,7 @@ export default function FocusScreen() {
   const timer = state.timer;
   const active = timer.status === 'running' || timer.status === 'paused';
   const completed = timer.status === 'completed';
+  // Tentukan mode berikutnya: istirahat panjang setelah 4 siklus fokus, atau istirahat singkat.
   const nextMode = timer.mode === 'focus' ? (state.cycle >= 4 ? 'longBreak' : 'shortBreak') : 'focus';
   return <Screen>
     <Heading title="Sesi fokus" subtitle={timer.mode === 'focus' ? 'Fokus pada satu hal yang berarti.' : 'Berhenti sejenak. Beri pikiranmu ruang.'} />
@@ -30,6 +33,7 @@ export default function FocusScreen() {
       <View style={ui.between}><View style={{ flex: 1, gap: 4 }}><Text style={ui.caption}>Aktivitas</Text><Text style={ui.label}>{timer.subjectName}</Text></View><View style={{ width: 32, height: 32, borderRadius: 16, backgroundColor: c.surfaceMuted, borderWidth: 1, borderColor: c.border, alignItems: 'center', justifyContent: 'center' }}><View style={{ width: 8, height: 8, borderRightWidth: 2, borderBottomWidth: 2, borderColor: active ? c.muted : c.foreground, transform: [{ rotate: '45deg' }], marginTop: -2 }} /></View></View>
     </Pressable>
     </View>
+    {/* Modal pemilih aktivitas yang hanya dapat diubah saat timer diam */}
     <FeedbackModal visible={selectingSubject} title="Pilih aktivitas" onClose={() => setSelectingSubject(false)}>
       <View style={{ gap: 8 }}>
         {state.subjects.map(subject => {
@@ -42,6 +46,7 @@ export default function FocusScreen() {
     </FeedbackModal>
     <View style={ui.group}>
     {completed ? <Card color={c.accentYellow}><Text style={ui.section}>{timer.mode === 'focus' ? 'Fokus selesai. Kerja bagus.' : 'Istirahat selesai. Siap mulai lagi.'}</Text><Text style={ui.body}>{timer.mode === 'focus' ? 'Sesimu tersimpan. Saatnya beristirahat.' : 'Mulai saat kamu siap. Sesi fokus berikutnya tinggal satu ketukan.'}</Text><Button disabled={busy} title={nextMode === 'longBreak' ? 'Siapkan istirahat panjang' : nextMode === 'shortBreak' ? 'Siapkan istirahat singkat' : 'Siapkan fokus'} onPress={() => { void act({ type: 'mode', mode: nextMode }); }} /></Card> : <Button disabled={busy} title={timer.status === 'running' ? 'Jeda' : timer.status === 'paused' ? 'Lanjutkan' : timer.mode === 'focus' ? 'Mulai fokus' : 'Mulai istirahat'} onPress={() => { void act({ type: timer.status === 'running' ? 'pause' : 'start' }); }} />}
+    {/* Tombol atur ulang memerlukan konfirmasi jika ada sesi berjalan */}
     <Button secondary disabled={busy || timer.status === 'idle'} title="Atur ulang" onPress={() => confirm('Atur ulang sesi?', 'Progres sesi ini akan dibuang. Sesi yang belum selesai tidak masuk riwayat.', () => { void act({ type: 'reset' }).then(success => { if (success) notify('Sesi diatur ulang.'); }); })} />
     </View>
   </Screen>;

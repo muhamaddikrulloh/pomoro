@@ -51,4 +51,6 @@ AGENTS.md
 .playwright-mcp/
 *.log
 *-snapshot.yml
+documentation.md
+
 

@@ -6,13 +6,16 @@ import { useApp } from '@/context/AppContext';
 import { formatDuration, getStats } from '@/utils/model';
 import { palette as c } from '@/constants/theme';
 
+// Halaman Beranda: menampilkan target sesi hari ini, pintasan fokus, dan aktivitas terkini.
 export default function HomeScreen() {
   const { state } = useApp();
   const stats = getStats(state.sessions);
   const todaySeconds = stats.week.at(-1)?.seconds ?? 0;
   const goal = state.settings.dailyGoalSessions;
+  // Hitung persentase ketercapaian target harian (maksimal 100%).
   const percent = Math.min(100, Math.round(stats.todaySessions / goal * 100));
   const active = state.timer.status === 'running' || state.timer.status === 'paused';
+  // Ambil maksimal 2 sesi terakhir untuk cuplikan aktivitas terbaru.
   const recent = [...state.sessions].sort((a, b) => b.completedAt - a.completedAt).slice(0, 2);
   return <Screen>
     <View style={ui.between}><View style={{ backgroundColor: c.surfaceMuted, borderWidth: 1, borderColor: c.border, borderRadius: 22, height: 44, paddingHorizontal: 16, justifyContent: 'center', alignItems: 'center' }}><Text style={{ color: c.foreground, fontSize: 23, fontWeight: '700', letterSpacing: -0.6, includeFontPadding: false, textAlignVertical: 'center', transform: [{ translateY: -3 }] }}>pomoro<Text style={{ color: '#A88A2F' }}>.</Text></Text></View><Pressable accessibilityRole="button" accessibilityLabel="Pengaturan" onPress={() => router.push('/settings')} style={({ pressed }) => ({ width: 44, height: 44, borderRadius: 22, backgroundColor: c.surfaceMuted, borderWidth: 1, borderColor: c.border, alignItems: 'center', justifyContent: 'center', opacity: pressed ? 0.5 : 1 })}><View style={{ width: 24, height: 24, alignItems: 'center', justifyContent: 'center' }}>{Array.from({ length: 8 }, (_, index) => <View key={index} style={{ position: 'absolute', width: 4, height: 22, borderRadius: 1, backgroundColor: c.foreground, transform: [{ rotate: `${index * 45}deg` }] }} />)}<View style={{ width: 17, height: 17, borderRadius: 9, borderWidth: 2, borderColor: c.foreground, backgroundColor: c.surfaceMuted, alignItems: 'center', justifyContent: 'center' }}><View style={{ width: 6, height: 6, borderRadius: 3, borderWidth: 1.5, borderColor: c.foreground }} /></View></View></Pressable></View>
@@ -33,3 +36,4 @@ export default function HomeScreen() {
     </View>
   </Screen>;
 }
+

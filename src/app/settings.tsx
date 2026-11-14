@@ -5,6 +5,7 @@ import { useFeedback } from '@/context/FeedbackContext';
 import { useApp } from '@/context/AppContext';
 import { defaultSettings } from '@/utils/model';
 
+// Daftar konfigurasi pengaturan beserta batas nilai maksimal dan satuannya.
 const fields = [
   { key: 'focusMinutes', label: 'Durasi fokus', max: 180, unit: 'menit' },
   { key: 'shortBreakMinutes', label: 'Istirahat singkat', max: 60, unit: 'menit' },
@@ -12,12 +13,16 @@ const fields = [
   { key: 'dailyGoalSessions', label: 'Target harian', max: 20, unit: 'sesi' },
 ] as const;
 
+// Halaman Pengaturan: mengonfigurasi durasi timer dan target harian sesi fokus.
 export default function SettingsScreen() {
   const { state, busy, act } = useApp();
   const { confirm, notify } = useFeedback();
   const [values, setValues] = useState(() => Object.fromEntries(fields.map(field => [field.key, String(state.settings[field.key])])));
   const [validation, setValidation] = useState('');
+  // Pengaturan dinonaktifkan ketika timer sedang berjalan atau dijeda.
   const active = state.timer.status === 'running' || state.timer.status === 'paused';
+
+  // Validasi input angka bulat positif sebelum disimpan ke context dan storage.
   async function save() {
     const invalid = fields.find(field => !/^\d+$/.test(values[field.key]) || !Number.isInteger(Number(values[field.key])) || Number(values[field.key]) < 1 || Number(values[field.key]) > field.max);
     if (invalid) {
@@ -28,6 +33,8 @@ export default function SettingsScreen() {
     const success = await act({ type: 'settings', settings: { focusMinutes: Number(values.focusMinutes), shortBreakMinutes: Number(values.shortBreakMinutes), longBreakMinutes: Number(values.longBreakMinutes), dailyGoalSessions: Number(values.dailyGoalSessions) } });
     if (success) notify('Pengaturan tersimpan.');
   }
+
+  // Mengembalikan preferensi durasi dan target ke nilai default Pomoro.
   async function resetPreferences() {
     setValidation('');
     const success = await act({ type: 'settings', settings: { ...defaultSettings } });
@@ -49,3 +56,4 @@ export default function SettingsScreen() {
     </View>
   </Screen>;
 }
+

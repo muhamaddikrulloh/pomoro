@@ -1,9 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { type AppState, validSettings } from '../utils/model';
 
+// Kunci penyimpanan AsyncStorage versi 1.
 const key = '@pomoro/state/v1';
 const finite = (value: unknown): value is number => typeof value === 'number' && Number.isFinite(value) && value >= 0;
 const text = (value: unknown): value is string => typeof value === 'string' && value.trim().length > 0;
+
+// Memvalidasi integritas struktur data lokal untuk mencegah crash akibat data rusak.
 export function validateState(value: unknown): value is AppState {
   if (!value || typeof value !== 'object') return false;
   const state = value as AppState;
@@ -19,6 +22,8 @@ export function validateState(value: unknown): value is AppState {
   if (t.status === 'paused' && (!finite(t.startedAt) || !text(t.sessionId) || t.endsAt !== null)) return false;
   return true;
 }
+
+// Membaca state tersimpan dari AsyncStorage saat aplikasi dimulai.
 export async function loadState(): Promise<AppState | null> {
   const raw = await AsyncStorage.getItem(key);
   if (raw === null) return null;
@@ -26,6 +31,9 @@ export async function loadState(): Promise<AppState | null> {
   if (!validateState(parsed)) throw new Error('Data lokal tidak valid. Data tidak ditimpa; coba muat ulang.');
   return parsed;
 }
+
+// Menyimpan seluruh state aplikasi ke AsyncStorage.
 export async function saveState(state: AppState) {
   await AsyncStorage.setItem(key, JSON.stringify(state));
 }
+

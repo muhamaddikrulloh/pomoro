@@ -10,12 +10,14 @@ const subscribeToClient = () => () => {};
 const clientSnapshot = () => true;
 const serverSnapshot = () => false;
 
+// Provider utama yang menangani sinkronisasi awal client pada platform web dan native.
 export function AppProvider({ children }: { children: ReactNode }) {
   const clientReady = useSyncExternalStore(subscribeToClient, clientSnapshot, serverSnapshot);
   if (Platform.OS === 'web' && !clientReady) return null;
   return <ClientAppProvider>{children}</ClientAppProvider>;
 }
 
+// Provider internal pengelola state global timer, aktivitas, riwayat, dan pengaturan.
 function ClientAppProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState(initialState);
   const [ready, setReady] = useState(false);
@@ -29,12 +31,14 @@ function ClientAppProvider({ children }: { children: ReactNode }) {
   const audio = useRef(chime.playCompletion);
   useEffect(() => { audio.current = chime.playCompletion; }, [chime.playCompletion]);
 
+  // Membaca state tersimpan dari AsyncStorage dan memulihkan sesi jatuh tempo.
   async function retryLoad() {
     if (locked.current) return;
     locked.current = true;
     setBusy(true);
     try {
       const loaded = (await loadState()) ?? initialState();
+      // Periksa apakah ada sesi yang selesai selama aplikasi ditutup.
       const restored = completeDue(loaded, Date.now());
       if (restored !== loaded) await saveState(restored);
       current.current = restored;
@@ -48,6 +52,7 @@ function ClientAppProvider({ children }: { children: ReactNode }) {
     } finally { locked.current = false; setBusy(false); }
   }
 
+  // Menjalankan transisi aksi timer dan menyimpan hasil ke penyimpanan lokal.
   async function update(action?: Action) {
     if (!hydrated.current || locked.current) return false;
     const timestamp = Date.now();
@@ -63,6 +68,7 @@ function ClientAppProvider({ children }: { children: ReactNode }) {
         setState(next);
       }
       setError(null);
+      // Bunyikan notifikasi lonceng jika ada sesi yang baru saja selesai.
       if (completed !== previous) audio.current(completed.timer.sessionId);
       return true;
     } catch (cause) {
@@ -71,14 +77,17 @@ function ClientAppProvider({ children }: { children: ReactNode }) {
     } finally { locked.current = false; setBusy(false); setNow(Date.now()); }
   }
 
+  // Siklus polling interval dan pendengar status aplikasi (foreground/background).
   useEffect(() => {
     void Promise.resolve().then(retryLoad);
     const interval = setInterval(() => {
       setNow(Date.now());
       const timer = current.current.timer;
+      // Perbarui state secara otomatis saat waktu selesai terlewati.
       if (timer.status === 'running' && timer.endsAt !== null && timer.endsAt <= Date.now()) void update();
     }, 500);
     const subscription = NativeAppState.addEventListener('change', status => {
+      // Saat aplikasi kembali ke foreground, sinkronkan sisa waktu dan periksa sesi selesai.
       if (status === 'active') { setNow(Date.now()); void update(); }
     });
     return () => { clearInterval(interval); subscription.remove(); };
@@ -86,6 +95,8 @@ function ClientAppProvider({ children }: { children: ReactNode }) {
 
   return <Context.Provider value={{ state, ready, error: error ?? chime.error, busy, remainingSeconds: remaining(state.timer, now), act: update, retryLoad }}>{children}</Context.Provider>;
 }
+
+// Hook pembantu untuk mengakses data aplikasi dan kontrol timer.
 export function useApp() {
   const value = useContext(Context);
   if (!value) throw new Error('AppProvider belum tersedia.');

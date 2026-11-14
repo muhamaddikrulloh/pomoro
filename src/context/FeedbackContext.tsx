@@ -8,8 +8,10 @@ type Confirmation = { title: string; message: string; onConfirm: () => void };
 type Feedback = { confirm: (title: string, message: string, onConfirm: () => void) => void; notify: (message: string) => void };
 const Context = createContext<Feedback | null>(null);
 
+// Modal dialog aksesibel untuk konfirmasi aksi penting seperti hapus aktivitas atau reset timer.
 export function FeedbackModal({ visible, title, onClose, children }: PropsWithChildren<{ visible: boolean; title: string; onClose: () => void }>) {
   const heading = useRef<ComponentRef<typeof Text>>(null);
+  // Alihkan fokus ke judul modal saat terbuka untuk pengguna screen reader.
   function focusHeading() {
     if (Platform.OS === 'web') heading.current?.focus();
     else {
@@ -30,20 +32,27 @@ export function FeedbackModal({ visible, title, onClose, children }: PropsWithCh
   </Modal>;
 }
 
+// Provider global untuk menampilkan pesan konfirmasi dan notifikasi snackbar.
 export function FeedbackProvider({ children }: PropsWithChildren) {
   const insets = useSafeAreaInsets();
   const [confirmation, setConfirmation] = useState<Confirmation | null>(null);
   const pending = useRef<Confirmation | null>(null);
   const [snackbar, setSnackbar] = useState<{ message: string } | null>(null);
+
+  // Memicu dialog konfirmasi sebelum tindakan berbahaya dijalankan.
   const confirm = useCallback<Feedback['confirm']>((title, message, onConfirm) => {
     pending.current = { title, message, onConfirm };
     setConfirmation(pending.current);
   }, []);
+
+  // Menampilkan pesan snackbar sementara di bagian atas layar.
   const notify = useCallback((message: string) => {
     setSnackbar({ message });
     if (Platform.OS !== 'web') AccessibilityInfo.announceForAccessibility(message);
   }, []);
   const cancel = useCallback(() => { pending.current = null; setConfirmation(null); }, []);
+
+  // Otomatis tutup snackbar setelah 4 detik.
   useEffect(() => {
     if (!snackbar) return;
     const timeout = setTimeout(() => setSnackbar(null), 4000);
@@ -64,6 +73,7 @@ export function FeedbackProvider({ children }: PropsWithChildren) {
   </Context.Provider>;
 }
 
+// Hook pembantu untuk mengakses fungsi dialog konfirmasi dan snackbar.
 export function useFeedback() {
   const value = useContext(Context);
   if (!value) throw new Error('FeedbackProvider belum tersedia.');
