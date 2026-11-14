@@ -11,7 +11,6 @@
   <a href="https://expo.dev/"><img src="https://img.shields.io/badge/framework-Expo%20SDK%2058-000020?style=flat-square&logo=expo&logoColor=white" alt="Framework: Expo" /></a>
   <a href="https://reactnative.dev/"><img src="https://img.shields.io/badge/library-React%20Native%200.88-61DAFB?style=flat-square&logo=react&logoColor=black" alt="Library: React Native" /></a>
   <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/language-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="Bahasa: TypeScript" /></a>
-  <a href="package.json"><img src="https://img.shields.io/badge/version-1.0.0-2F80ED?style=flat-square" alt="Versi: 1.0.0" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-7A5AF8?style=flat-square" alt="Lisensi: MIT" /></a>
 </p>
 
