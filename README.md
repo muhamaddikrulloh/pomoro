@@ -34,7 +34,6 @@ Pomoro menerapkan teknik Pomodoro yang membagi waktu belajar ke dalam interval f
 - **Waktu Hitung Mundur Akurat**: Menggunakan patokan waktu nyata (*timestamp*), sehingga timer tetap berjalan tepat meskipun aplikasi diminimalkan (*background*) atau layar ponsel mati.
 - **Pencatatan Berdasarkan Aktivitas**: Setiap sesi fokus dapat diberi nama (seperti tugas kuliah, membaca materi, atau latihan koding) agar kamu tahu ke mana waktumu dihabiskan.
 - **Pantau Target dan Kebiasaan**: Menampilkan capaian target sesi harian, total waktu fokus, dan hari aktif berturut-turut (*streak*) secara langsung dari riwayat belajarmu.
-- **Privasi Aman & Berjalan Offline**: Seluruh data tersimpan secara lokal di perangkat menggunakan AsyncStorage. Tanpa akun, tanpa internet, dan datamu sepenuhnya milikmu.
 
 ## Fitur Utama
 
@@ -44,7 +43,7 @@ Pomoro menerapkan teknik Pomodoro yang membagi waktu belajar ke dalam interval f
 - **Target Harian**: Tentukan berapa sesi fokus yang ingin dicapai setiap hari. Halaman utama menampilkan persentase dan bar progres yang terisi seiring sesi yang kamu selesaikan.
 - **Statistik & Grafik Mingguan**: Lihat total waktu belajar, jumlah sesi yang tuntas, catatan hari berturut-turut, serta grafik batang waktu fokus selama 7 hari terakhir.
 - **Riwayat Sesi Lengkap**: Setiap sesi fokus yang selesai otomatis tercatat rapi beserta nama aktivitas, durasi, tanggal, dan jam pengerjaan.
-- **Suara Lonceng Lembut**: Bunyi lonceng penanda dari `expo-audio` yang memberitahu saat sesi fokus atau istirahat selesai ketika aplikasi sedang dibuka.
+- **Suara Notifikasi**: Bunyi notifikasi penanda dari `expo-audio` yang memberitahu saat sesi fokus atau istirahat selesai ketika aplikasi sedang dibuka.
 - **Penyimpanan Lokal Otomatis**: Semua data aktivitas, riwayat sesi, dan preferensi pengaturan langsung tersimpan di penyimpanan perangkat sehingga tidak hilang saat aplikasi ditutup.
 - **Pengaturan Waktu Fleksibel**: Bebas menyesuaikan durasi fokus (1–180 menit), istirahat singkat/panjang (1–60 menit), serta target harian dengan opsi kembali ke pengaturan awal kapan saja.
 
