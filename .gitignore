@@ -50,4 +50,9 @@ AGENTS.md
 .antigravity/
 .playwright-mcp/
 *.log
+*-snapshot.yml
+
+# Tests
+tests/
+
 
