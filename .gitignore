@@ -42,7 +42,6 @@ example
 /ios
 /android
 
-# AI, Editor & tooling
 .claude/
 .vscode/
 .idea/
@@ -54,5 +53,3 @@ AGENTS.md
 
 # Tests
 tests/
-
-
