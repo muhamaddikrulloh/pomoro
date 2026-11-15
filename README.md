@@ -4,7 +4,7 @@
 
 <h1 align="center">Pomoro</h1>
 
-<p align="center">Aplikasi pengatur waktu fokus dan belajar Pomodoro yang sederhana dan bebas distraksi.</p>
+<p align="center">Aplikasi pengatur waktu fokus dan belajar menggunakan metode Pomodoro yang sederhana dan bebas distraksi.</p>
 
 <p align="center">
   <a href="https://reactnative.dev/"><img src="https://img.shields.io/badge/platform-Android%20%7C%20iOS%20%7C%20Web-3DDC84?style=flat-square" alt="Platform: Android | iOS | Web" /></a>
@@ -21,7 +21,7 @@
   Kelas: 5B
 </p>
 
-Saat belajar atau mengerjakan tugas, kita sering kali mudah teralihkan oleh notifikasi dan membuka aplikasi lain di ponsel. **Pomoro** dibuat untuk membantumu membangun kebiasaan belajar yang lebih teratur menggunakan teknik Pomodoro. Dengan tampilan yang bersih, tenang, dan tanpa dekorasi berlebihan, Pomoro membantumu fokus menyelesaikan satu hal demi satu hal secara nyaman—semua data tersimpan langsung di ponselmu tanpa perlu login atau koneksi internet.
+Saat belajar atau mengerjakan tugas, kita sering kali mudah teralihkan oleh notifikasi dan membuka aplikasi lain di ponsel. **Pomoro** dibuat untuk membantumu membangun kebiasaan belajar yang lebih teratur menggunakan teknik Pomodoro. Dengan tampilan yang bersih, tenang, dan tanpa dekorasi berlebihan, Pomoro membantumu fokus menyelesaikan satu hal demi satu hal secara nyaman, semua data tersimpan langsung di ponselmu tanpa perlu login atau koneksi internet.
 
 ---
 
