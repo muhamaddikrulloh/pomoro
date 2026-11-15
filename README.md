@@ -30,9 +30,9 @@ Saat belajar atau mengerjakan tugas, kita sering kali mudah teralihkan oleh noti
 Pomoro menerapkan teknik Pomodoro yang membagi waktu belajar ke dalam interval fokus dan waktu istirahat yang teratur:
 
 - **Fokus & Istirahat Terjadwal**: Membantu membagi waktu belajar ke sesi fokus terarah (bawaan 25 menit) yang diselingi istirahat singkat dan panjang agar pikiran tetap segar.
-- **Waktu Hitung Mundur Akurat**: Menggunakan patokan waktu nyata (*timestamp*), sehingga timer tetap berjalan tepat meskipun aplikasi diminimalkan (*background*) atau layar ponsel mati.
+- **Waktu Hitung Mundur Akurat**: Menggunakan patokan waktu nyata (_timestamp_), sehingga timer tetap berjalan tepat meskipun aplikasi diminimalkan (_background_) atau layar ponsel mati.
 - **Pencatatan Berdasarkan Aktivitas**: Setiap sesi fokus dapat diberi nama (seperti tugas kuliah, membaca materi, atau latihan koding) agar kamu tahu ke mana waktumu dihabiskan.
-- **Pantau Target dan Kebiasaan**: Menampilkan capaian target sesi harian, total waktu fokus, dan hari aktif berturut-turut (*streak*) secara langsung dari riwayat belajarmu.
+- **Pantau Target dan Kebiasaan**: Menampilkan capaian target sesi harian, total waktu fokus, dan hari aktif berturut-turut (_streak_) secara langsung dari riwayat belajarmu.
 
 ## Fitur Utama
 
@@ -62,15 +62,15 @@ Pomoro menerapkan teknik Pomodoro yang membagi waktu belajar ke dalam interval f
 
 ## Teknologi yang Digunakan
 
-| Bagian | Teknologi |
-| :--- | :--- | :--- |
-| **Framework & Platform** | Expo SDK 58, React Native 0.88, React 19 |
-| **Bahasa Pemrograman** | TypeScript 6.0 |
-| **Navigasi Halaman** | Expo Router 58 |
-| **State Management** | React Context API & React Hooks |
-| **Penyimpanan Lokal** | AsyncStorage (`@react-native-async-storage/async-storage` 2.2.0) |
-| **Audio Suara** | `expo-audio` 58 |
-| **Tata Letak & UI** | `react-native-safe-area-context` 5.11, `expo-status-bar` |
+| Bagian                   | Teknologi                                                        |
+| :----------------------- | :--------------------------------------------------------------- |
+| **Framework & Platform** | Expo SDK 58, React Native 0.88, React 19                         |
+| **Bahasa Pemrograman**   | TypeScript 6.0                                                   |
+| **Navigasi Halaman**     | Expo Router 58                                                   |
+| **State Management**     | React Context API & React Hooks                                  |
+| **Penyimpanan Lokal**    | AsyncStorage (`@react-native-async-storage/async-storage` 2.2.0) |
+| **Audio Suara**          | `expo-audio` 58                                                  |
+| **Tata Letak & UI**      | `react-native-safe-area-context` 5.11, `expo-status-bar`         |
 
 ## Memulai
 
@@ -82,17 +82,20 @@ Pomoro menerapkan teknik Pomodoro yang membagi waktu belajar ke dalam interval f
 ### Cara Menjalankan Aplikasi
 
 1. Kloning repositori ini:
+
    ```bash
    git clone https://github.com/muhamaddikrulloh/pomoro.git
    cd pomoro
    ```
 
 2. Pasang dependensi yang diperlukan:
+
    ```bash
    npm install
    ```
 
 3. Jalankan server pengembangan Expo:
+
    ```bash
    npx expo start
    ```
@@ -101,22 +104,22 @@ Pomoro menerapkan teknik Pomodoro yang membagi waktu belajar ke dalam interval f
    - Tekan `a` di terminal untuk membuka di Android emulator / perangkat fisik (`npm run android`).
    - Tekan `i` di terminal untuk membuka di simulator iOS (`npm run ios`).
    - Tekan `w` di terminal untuk membuka di browser web (`npm run web`).
-   - Buka aplikasi Expo Go di HP, lalu pindai (*scan*) kode QR yang ada di terminal.
+   - Buka aplikasi Expo Go di HP, lalu pindai (_scan_) kode QR yang ada di terminal.
 
 ## Struktur Direktori
 
-| Direktori | Fungsi Utama |
-| :--- | :--- |
-| `src/app/` | Halaman aplikasi dan alur navigasi Expo Router (beranda, fokus, progres, riwayat, pengaturan, aktivitas). |
-| `src/components/` | Komponen tampilan yang dipakai berulang kali (dial timer, kartu ringkasan, tombol, input form). |
-| `src/context/` | Pusat pengelolaan state aplikasi untuk siklus timer, penyimpanan data, dan pesan notifikasi. |
-| `src/hooks/` | Custom hooks untuk kontrol audio lonceng, deteksi tema, dan skema warna. |
-| `src/storage/` | Modul pembacaan dan penyimpanan data ke AsyncStorage beserta validasinya. |
-| `src/utils/` | Logika murni aplikasi: perhitungan sisa waktu timer, pencatatan sesi, dan kalkulasi statistik. |
-| `src/constants/` | Token desain visual: palet warna, tipografi, dan jarak padding/margin. |
-| `assets/` | Aset ikon aplikasi, splash screen, dan berkas audio WAV. |
-| `docs/` | Berkas tangkapan layar antarmuka dan dokumentasi pendukung. |
-| `tests/` | Kumpulan pengujian otomatis untuk menguji timer, riwayat, dan penyimpanan lokal. |
+| Direktori         | Fungsi Utama                                                                                              |
+| :---------------- | :-------------------------------------------------------------------------------------------------------- |
+| `src/app/`        | Halaman aplikasi dan alur navigasi Expo Router (beranda, fokus, progres, riwayat, pengaturan, aktivitas). |
+| `src/components/` | Komponen tampilan yang dipakai berulang kali (dial timer, kartu ringkasan, tombol, input form).           |
+| `src/context/`    | Pusat pengelolaan state aplikasi untuk siklus timer, penyimpanan data, dan pesan notifikasi.              |
+| `src/hooks/`      | Custom hooks untuk kontrol audio lonceng, deteksi tema, dan skema warna.                                  |
+| `src/storage/`    | Modul pembacaan dan penyimpanan data ke AsyncStorage beserta validasinya.                                 |
+| `src/utils/`      | Logika murni aplikasi: perhitungan sisa waktu timer, pencatatan sesi, dan kalkulasi statistik.            |
+| `src/constants/`  | Token desain visual: palet warna, tipografi, dan jarak padding/margin.                                    |
+| `assets/`         | Aset ikon aplikasi, splash screen, dan berkas audio WAV.                                                  |
+| `docs/`           | Berkas tangkapan layar antarmuka dan dokumentasi pendukung.                                               |
+| `tests/`          | Kumpulan pengujian otomatis untuk menguji timer, riwayat, dan penyimpanan lokal.                          |
 
 ## Pengembangan & Pengujian
 
@@ -135,8 +138,8 @@ npm test
 
 ## Kontribusi
 
-Saran perbaikan, laporan kendala (*bug report*), atau ide fitur baru sangat diterima. Silakan buka *issue* atau kirimkan *pull request* pada repositori ini.
+Saran perbaikan, laporan kendala (_bug report_), atau ide fitur baru sangat diterima. Silakan buka _issue_ atau kirimkan _pull request_ pada repositori ini.
 
 ## Lisensi
 
-Proyek ini bersifat terbuka (*open-source*) di bawah lisensi [MIT License](LICENSE).
+Proyek ini bersifat terbuka (_open-source_) di bawah lisensi [MIT License](LICENSE).
