@@ -62,7 +62,7 @@ Pomoro menerapkan teknik Pomodoro yang membagi waktu belajar ke dalam interval f
 
 ## Teknologi yang Digunakan
 
-| Bagian | Teknologi | Keterangan |
+| Bagian | Teknologi |
 | :--- | :--- | :--- |
 | **Framework & Platform** | Expo SDK 58, React Native 0.88, React 19 |
 | **Bahasa Pemrograman** | TypeScript 6.0 |
