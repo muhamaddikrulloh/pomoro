@@ -121,21 +121,6 @@ Pomoro menerapkan teknik Pomodoro yang membagi waktu belajar ke dalam interval f
 | `docs/`           | Berkas tangkapan layar antarmuka dan dokumentasi pendukung.                                               |
 | `tests/`          | Kumpulan pengujian otomatis untuk menguji timer, riwayat, dan penyimpanan lokal.                          |
 
-## Pengembangan & Pengujian
-
-Sebelum menyimpan atau mengumpulkan pekerjaan, jalankan perintah pengecekan berikut:
-
-```bash
-# Cek kesalahan tipe data TypeScript
-npm run typecheck
-
-# Cek kerapian kode dengan linter
-npm run lint
-
-# Jalankan pengujian logika otomatis
-npm test
-```
-
 ## Kontribusi
 
 Saran perbaikan, laporan kendala (_bug report_), atau ide fitur baru sangat diterima. Silakan buka _issue_ atau kirimkan _pull request_ pada repositori ini.
